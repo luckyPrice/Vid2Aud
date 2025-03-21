@@ -147,14 +147,14 @@ Here are some essential Kubernetes commands for managing your deployment:
 
 ### MongoDB
 
-To install MongoDB, set the database username and password in `values.yaml`, then navigate to the MongoDB Helm chart folder and run:
+MongoDB 설치하려면 `values.yaml` 파일에 데이터베이스 사용자 이름과 비밀번호를 설정한 다음, MongoDB Helm 차트 폴더로 이동해서 다음 명령어 실행
 
 ```
 cd Helm_charts/MongoDB
 helm install mongo .
 ```
 
-Connect to the MongoDB instance using:
+MongoDB 인스턴스에 접속하려면 다음 명령어 사용
 
 ```
 mongosh mongodb://<username>:<pwd>@<nodeip>:30005/mp3s?authSource=admin
