@@ -179,14 +179,13 @@ psql 'postgres://<username>:<pwd>@<nodeip>:30003/authdb'
 
 ### RabbitMQ
 
-Deploy RabbitMQ by running:
+RabbitMQ 배포하려면 다음 명령어 실행
 
 ```
 helm install rabbitmq .
 ```
 
-Ensure you have created two queues in RabbitMQ named `mp3` and `video`. To create queues, visit `<nodeIp>:30004>` and use default username `guest` and password `guest`
-
+`mp3`와 `video`라는 두 개의 큐가 RabbitMQ에 생성되어 있는지 확인. 큐를 만들려면 `<nodeIp>:30004>`에 접속하고 기본 사용자 이름 `guest`, 비밀번호 `guest`로 로그인.
 **NOTE:** Ensure that all the necessary ports are open in the node security group.
 
 ### Apply the manifest file for each microservice:
