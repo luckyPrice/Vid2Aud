@@ -188,94 +188,97 @@ helm install rabbitmq .
 `mp3`와 `video`라는 두 개의 큐가 RabbitMQ에 생성되어 있는지 확인. 큐를 만들려면 `<nodeIp>:30004>`에 접속하고 기본 사용자 이름 `guest`, 비밀번호 `guest`로 로그인.
 **NOTE:** Ensure that all the necessary ports are open in the node security group.
 
-### Apply the manifest file for each microservice:
+### 마이크로서비스 매니페스트 파일 적용
 
 - **Auth Service:**
-  ```
+  ```bash
   cd auth-service/manifest
   kubectl apply -f .
   ```
 
 - **Gateway Service:**
-  ```
+  ```bash
   cd gateway-service/manifest
   kubectl apply -f .
   ```
 
 - **Converter Service:**
-  ```
+  ```bash
   cd converter-service/manifest
   kubectl apply -f .
   ```
 
 - **Notification Service:**
-  ```
+  ```bash
   cd notification-service/manifest
   kubectl apply -f .
   ```
 
-### Application Validation
+---
 
-After deploying the microservices, verify the status of all components by running:
+### 애플리케이션 유효성 검사
 
-```
+마이크로서비스 배포 후 모든 구성 요소 상태를 확인하려면 다음 명령어 실행
+
+```bash
 kubectl get all
 ```
 
-### Notification Configuration
+---
 
+### 알림 구성
 
+이메일 알림과 2단계 인증(2FA)을 구성하려면 다음 단계 따라
 
-For configuring email notifications and two-factor authentication (2FA), follow these steps:
+1. Gmail 계정으로 이동해서 프로필 클릭  
+2. **"Google 계정 관리"** 클릭  
+3. 왼쪽 메뉴에서 **"보안"** 탭 선택  
+4. **"2단계 인증"** 활성화  
+5. 애플리케이션 전용 비밀번호를 찾아서 설정에서 확인  
+6. **"기타"** 클릭하고 이름 입력  
+7. **"생성"** 클릭해서 생성된 비밀번호 복사  
+8. 이 비밀번호를 `notification-service/manifest/secret.yaml` 파일에 이메일과 함께 붙여넣기  
 
-1. Go to your Gmail account and click on your profile.
+---
 
-2. Click on "Manage Your Google Account."
+### 애플리케이션 실행
 
-3. Navigate to the "Security" tab on the left side panel.
+다음 API 호출로 애플리케이션 실행
 
-4. Enable "2-Step Verification."
+---
 
-5. Search for the application-specific passwords. You will find it in the settings.
+#### API 정의
 
-6. Click on "Other" and provide your name.
-
-7. Click on "Generate" and copy the generated password.
-
-8. Paste this generated password in `notification-service/manifest/secret.yaml` along with your email.
-
-Run the application through the following API calls:
-
-# API Definition
-
-- **Login Endpoint**
-  ```http request
+- **로그인 엔드포인트**
+  ```http
   POST http://nodeIP:30002/login
   ```
-
-  ```console
+  ```bash
   curl -X POST http://nodeIP:30002/login -u <email>:<password>
-  ``` 
-  Expected output: success!
+  ```
+  **예상 결과:** 성공!
 
-- **Upload Endpoint**
-  ```http request
+---
+
+- **업로드 엔드포인트**
+  ```http
   POST http://nodeIP:30002/upload
   ```
+  ```bash
+  curl -X POST -F 'file=@./video.mp4' -H 'Authorization: Bearer <JWT Token>' http://nodeIP:30002/upload
+  ```
+  **확인:** 이메일로 ID 수신 여부 확인  
 
-  ```console
-   curl -X POST -F 'file=@./video.mp4' -H 'Authorization: Bearer <JWT Token>' http://nodeIP:30002/upload
-  ``` 
-  
-  Check if you received the ID on your email.
+---
 
-- **Download Endpoint**
-  ```http request
+- **다운로드 엔드포인트**
+  ```http
   GET http://nodeIP:30002/download?fid=<Generated file identifier>
   ```
-  ```console
-   curl --output video.mp3 -X GET -H 'Authorization: Bearer <JWT Token>' "http://nodeIP:30002/download?fid=<Generated fid>"
-  ``` 
+  ```bash
+  curl --output video.mp3 -X GET -H 'Authorization: Bearer <JWT Token>' "http://nodeIP:30002/download?fid=<Generated fid>"
+  ```  
+  **확인:** 변환된 파일(mp3)이 성공적으로 다운로드되는지 확인
 
 ## Destroying the Infrastructure
 
