@@ -64,7 +64,7 @@ mp4 비디오를 mps로 변환하는 마이크로서비스 프로젝트.
 
 
 
-1. **Log in to AWS Console:**
+<!-- 1. **Log in to AWS Console:**
    - Access the AWS Management Console with your AWS account credentials.
 
 2. **Create eksCluster IAM Role**
@@ -102,30 +102,35 @@ mp4 비디오를 mps로 변환하는 마이크로서비스 프로젝트.
    - Wait for the cluster to provision, which may take several minutes.
 
 7. **Cluster Ready:**
-   - Once the cluster status shows as "Active," you can now create node groups.
+   - Once the cluster status shows as "Active," you can now create node groups. -->
 
-#### Node Group Creation
+#### 노드 그룹 생성
 
-1. In the "Compute" section, click on "Add node group."
+1. **Compute** 섹션에서 **"Add node group"** 버튼클릭.
 
-2. Choose the AMI (default), instance type (e.g., t3.medium), and the number of nodes (attach a screenshot here).
+2. AMI(기본값), 인스턴스 유형(e.g., `t3.medium`), 노드 수를 선택.
 
-3. Click "Create node group."
+3. **"Create node group"** 버튼을 클릭하여 노드 그룹을 생성.
 
-#### Adding inbound rules in Security Group of Nodes
+---
 
-**NOTE:** Ensure that all the necessary ports are open in the node security group.
+#### 노드 보안 그룹의 인바운드 규칙 추가
+
+**주의:** 노드 보안 그룹에서 필요한 모든 포트가 열려 있는지 확인.
 
 <p align="center">
   <img src="./Project documentation/inbound_rules_sg.png" width="600" title="Inbound_rules_sg" alt="Inbound_rules_sg">
-  </p>
+</p>
 
-#### Enable EBS CSI Addon
-1. enable addon `ebs csi` this is for enabling pvcs once cluster is created
+---
+
+#### EBS CSI 애드온 활성화
+
+1. `ebs csi` 애드온을 활성화합니다. 클러스터가 생성된 후 PVCs(Persistent Volume Claims)를 활성화하기 위해 필요합니다.
 
 <p align="center">
   <img src="./Project documentation/ebs_addon.png" width="600" title="ebs_addon" alt="ebs_addon">
-  </p>
+</p>
 
 #### Deploying your application on EKS Cluster
 
