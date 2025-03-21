@@ -132,12 +132,11 @@ mp4 비디오를 mps로 변환하는 마이크로서비스 프로젝트.
   <img src="./Project documentation/ebs_addon.png" width="600" title="ebs_addon" alt="ebs_addon">
 </p>
 
-#### Deploying your application on EKS Cluster
+#### EKS 클러스터에 애플리케이션 배포하기
 
-1. Clone the code from this repository.
-
-2. Set the cluster context:
-   ```
+1. 코드 리포지토리를 클론  
+2. 클러스터 컨텍스트를 설정  
+   ```bash
    aws eks update-kubeconfig --name <cluster_name> --region <aws_region>
    ```
 
