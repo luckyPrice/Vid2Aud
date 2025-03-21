@@ -162,7 +162,7 @@ mongosh mongodb://<username>:<pwd>@<nodeip>:30005/mp3s?authSource=admin
 
 ### PostgreSQL
 
-Set the database username and password in `values.yaml`. Install PostgreSQL from the PostgreSQL Helm chart folder and initialize it with the queries in `init.sql`. For PowerShell users:
+`values.yaml` 파일에 데이터베이스 사용자 이름과 비밀번호 설정. PostgreSQL Helm 차트 폴더에서 PostgreSQL 설치하고 `init.sql` 파일의 쿼리로 초기화. PowerShell 사용자라면 아래 명령어 실행
 
 ```
 cd ..
@@ -170,10 +170,12 @@ cd Postgres
 helm install postgres .
 ```
 
-Connect to the Postgres database and copy all the queries from the "init.sql" file.
+Postgres 데이터베이스에 접속하고 "init.sql" 파일의 모든 쿼리 복사해서 실행
+
 ```
 psql 'postgres://<username>:<pwd>@<nodeip>:30003/authdb'
 ```
+
 
 ### RabbitMQ
 
