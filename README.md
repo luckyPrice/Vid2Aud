@@ -1,5 +1,5 @@
-# Devops Project: video-converter
-Converting mp4 videos to mp3 in a microservices architecture.
+# Vid2Aud
+mp4 비디오를 mps로 변환하는 마이크로서비스 프로젝트.
 
 ## Architecture
 
@@ -7,55 +7,62 @@ Converting mp4 videos to mp3 in a microservices architecture.
   <img src="./Project documentation/ProjectArchitecture.png" width="600" title="Architecture" alt="Architecture">
   </p>
 
-## Deploying a Python-based Microservice Application on AWS EKS
 
-### Introduction
+## Python 기반의 마이크로서비스 어플리케이션을 AWS EKS로 배포.
 
-This document provides a step-by-step guide for deploying a Python-based microservice application on AWS Elastic Kubernetes Service (EKS). The application comprises four major microservices: `auth-server`, `converter-module`, `database-server` (PostgreSQL and MongoDB), and `notification-server`.
+### 소개
 
-### Prerequisites
+이 문서는 AWS Elastic Kubernetes Service(EKS)에서 Python 기반 마이크로서비스 애플리케이션을 배포하는 단계별 가이드를 제공합니다. 애플리케이션은 다음과 같은 네 가지 주요 마이크로서비스로 구성됩니다: `auth-server`, `converter-module`, `database-server`(PostgreSQL 및 MongoDB), `notification-server`.
 
-Before you begin, ensure that the following prerequisites are met:
+---
 
-1. **Create an AWS Account:** If you do not have an AWS account, create one by following the steps [here](https://docs.aws.amazon.com/streams/latest/dev/setting-up.html).
+### 사전 준비 사항
 
-2. **Install Helm:** Helm is a Kubernetes package manager. Install Helm by following the instructions provided [here](https://helm.sh/docs/intro/install/).
+시작하기 전에 다음 사전 조건을 충족했는지 확인하세요:
 
-3. **Python:** Ensure that Python is installed on your system. You can download it from the [official Python website](https://www.python.org/downloads/).
+1. **AWS 계정 생성:** AWS 계정이 없다면 [여기](https://docs.aws.amazon.com/streams/latest/dev/setting-up.html)를 따라 계정을 생성하세요.
 
-4. **AWS CLI:** Install the AWS Command Line Interface (CLI) following the official [installation guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
+2. **Helm 설치:** Helm은 Kubernetes 패키지 관리 도구입니다. [여기](https://helm.sh/docs/intro/install/)를 참고하여 Helm을 설치하세요.
 
-5. **Install kubectl:** Install the latest stable version of `kubectl` on your system. You can find installation instructions [here](https://kubernetes.io/docs/tasks/tools/).
+3. **Python:** Python이 시스템에 설치되어 있는지 확인하세요. [Python 공식 웹사이트](https://www.python.org/downloads/)에서 다운로드할 수 있습니다.
 
-6. **Databases:** Set up PostgreSQL and MongoDB for your application.
+4. **AWS CLI:** AWS 명령줄 인터페이스(CLI)를 설치하세요. 공식 [설치 가이드](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)를 참고하세요.
 
-### High Level Flow of Application Deployment
+5. **kubectl 설치:** 최신 안정 버전의 `kubectl`을 시스템에 설치하세요. 설치 방법은 [여기](https://kubernetes.io/docs/tasks/tools/)에서 확인할 수 있습니다.
 
-Follow these steps to deploy your microservice application:
+6. **데이터베이스:** 애플리케이션에 필요한 PostgreSQL과 MongoDB를 설정하세요.
 
-1. **MongoDB and PostgreSQL Setup:** Create databases and enable automatic connections to them.
+---
 
-2. **RabbitMQ Deployment:** Deploy RabbitMQ for message queuing, which is required for the `converter-module`.
+### 애플리케이션 배포의 주요 흐름
 
-3. **Create Queues in RabbitMQ:** Before deploying the `converter-module`, create two queues in RabbitMQ: `mp3` and `video`.
+다음 단계에 따라 마이크로서비스 애플리케이션을 배포:
 
-4. **Deploy Microservices:**
-   - **auth-server:** Navigate to the `auth-server` manifest folder and apply the configuration.
-   - **gateway-server:** Deploy the `gateway-server`.
-   - **converter-module:** Deploy the `converter-module`. Make sure to provide your email and password in `converter/manifest/secret.yaml`.
-   - **notification-server:** Configure email for notifications and two-factor authentication (2FA).
+1. **MongoDB 및 PostgreSQL 설정:** 데이터베이스를 생성하고 자동 연결을 활성화.
 
-5. **Application Validation:** Verify the status of all components by running:
+2. **RabbitMQ 배포:** 메시지 큐잉을 위해 RabbitMQ를 배포합니다. 이는 `converter-module`에서 필요.
+
+3. **RabbitMQ 큐 생성:** `converter-module`을 배포하기 전에 RabbitMQ에 두 개의 큐를 생성: `mp3`와 `video`.
+
+4. **마이크로서비스 배포:**
+   - **auth-server:** `auth-server` 매니페스트 폴더로 이동하여 구성 파일을 적용.
+   - **gateway-server:** `gateway-server`를 배포합니다.
+   - **converter-module:** `converter-module`을 배포합니다. `converter/manifest/secret.yaml` 파일에 이메일과 비밀번호를 제공해야함.
+   - **notification-server:** 알림 및 2단계 인증(2FA)을 위해 이메일을 구성.
+
+5. **애플리케이션 유효성 검사:** 모든 구성 요소의 상태를 다음 명령어로 확인:
    ```bash
    kubectl get all
    ```
 
-6. **Destroying the Infrastructure** 
-
+6. **인프라 파기:** 설정된 모든 인프라를 삭제.
 
 ### Low Level Steps
 
 #### Cluster Creation
+
+
+
 
 1. **Log in to AWS Console:**
    - Access the AWS Management Console with your AWS account credentials.
