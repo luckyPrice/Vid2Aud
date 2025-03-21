@@ -280,10 +280,10 @@ kubectl get all
   ```  
   **확인:** 변환된 파일(mp3)이 성공적으로 다운로드되는지 확인
 
-## Destroying the Infrastructure
+## 인프라 삭제
 
-To clean up the infrastructure, follow these steps:
+인프라 정리하려면 다음 단계 따라
 
-1. **Delete the Node Group:** Delete the node group associated with your EKS cluster.
+1. **노드 그룹 삭제:** EKS 클러스터와 연결된 노드 그룹 삭제  
 
-2. **Delete the EKS Cluster:** Once the nodes are deleted, you can proceed to delete the EKS cluster itself.
+2. **EKS 클러스터 삭제:** 노드가 모두 삭제된 후 EKS 클러스터 자체를 삭제  
